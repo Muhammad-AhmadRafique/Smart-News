@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, TextInput } from "react-native-paper";
 import { Spacer } from "../components/spacer.component";
-import NewsFeedScreen from "./newsFeedScreen";
 
 function LoginScreen(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const validate = (text) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -16,6 +16,9 @@ function LoginScreen(props) {
     return result;
   };
 
+  const toggleSwitch = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
@@ -40,9 +43,15 @@ function LoginScreen(props) {
         maxLength={20}
         underlineColor="#DDDDDD"
         activeUnderlineColor="#5f9ea0"
-        secureTextEntry={true}
+        secureTextEntry={!showPassword}
         style={{ height: 50, fontFamily: "Lato_400Regular" }}
         onChangeText={(value) => setPassword(value)}
+        right={
+          <TextInput.Icon
+            name={showPassword ? "eye" : "eye-off"}
+            onPress={() => setShowPassword(!showPassword)}
+          />
+        }
       />
       <Spacer position="top" size="large" />
       <TouchableOpacity
