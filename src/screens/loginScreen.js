@@ -1,83 +1,72 @@
 import React, { useState } from "react";
-import { Alert, Image, StyleSheet, View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
-import styled from "styled-components/native";
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text, TextInput } from "react-native-paper";
 import { Spacer } from "../components/spacer.component";
+import NewsFeedScreen from "./newsFeedScreen";
 
 function LoginScreen(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const validate = (text) => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    const result = reg.test(text);
+    console.log(text, result);
+    setEmail(text);
+    return result;
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
-        <Image
-          source={require("../../assets/logo.png")}
-          style={{
-            height: 100,
-            width: 100,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        ></Image>
-        <Spacer position="top" size="large" />
         <Text style={styles.title}>Smart News</Text>
+        <Spacer position="top" size="large" />
+        <Image style={styles.logo} source={require("../../assets/logo2.png")} />
       </View>
-      <Spacer position="top" size="large" />
-      <Spacer position="top" size="large" />
-      <Spacer position="top" size="large" />
-
+      <View style={{ marginTop: 50 }}></View>
       <TextInput
         label="Email"
         value={email}
+        maxLength={320}
         underlineColor="#DEDEDE"
         activeUnderlineColor="#5f9ea0"
-        style={{ height: 55 }}
-        onChangeText={(text) => setPassword(email)}
+        style={{ height: 50, fontFamily: "Lato_400Regular" }}
+        onChangeText={(value) => setEmail(value)}
       />
       <Spacer position="top" size="large" />
       <TextInput
         label="Password"
         value={password}
+        maxLength={20}
         underlineColor="#DDDDDD"
         activeUnderlineColor="#5f9ea0"
         secureTextEntry={true}
-        style={{ height: 55 }}
-        onChangeText={(text) => setPassword(text)}
+        style={{ height: 50, fontFamily: "Lato_400Regular" }}
+        onChangeText={(value) => setPassword(value)}
       />
       <Spacer position="top" size="large" />
-
-      <Button
-        style={{ height: 50, justifyContent: "center" }}
-        labelStyle={{
-          color: "white",
-          fontFamily: "Lato_700Bold",
-        }}
-        color="#5f9ea0"
-        textColor="#FFFFFF"
-        backgroundColor="#C6DAF7"
-        mode="contained"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => {
-          if (email === "" && password === "") {
-            Alert.alert("Error", "please enter valid credentials");
+          const result = validate(email);
+          if (result === false) {
+            Alert.alert("Error", "Please enter valid email");
+          } else {
+            console.log("validsssss screens");
           }
         }}
       >
-        SIGN IN
-      </Button>
+        <Text
+          style={{ color: "#FFFFFF", fontFamily: "Lato_700Bold", fontSize: 15 }}
+        >
+          SIGN IN
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 export default LoginScreen;
-
-const TomatoButton = styled.Button`
-  color: tomato;
-  border-color: tomato;
-`;
-
-const Title = styled(Text)`
-  color: green;
-`;
 
 const styles = StyleSheet.create({
   container: {
@@ -87,12 +76,26 @@ const styles = StyleSheet.create({
     marginTop: 100,
     margin: 20,
   },
-  btn: {
-    color: "#DDDDDD",
+  logo: {
+    height: 100,
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center",
   },
+  button: {
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#5f9ea0",
+    padding: 10,
+    color: "white",
+    fontFamily: "Lato_700Bold",
+    borderRadius: 4,
+  },
+
   title: {
     color: "#333333",
     fontFamily: "Lato_700Bold",
-    fontSize: 20,
+    fontSize: 25,
   },
 });
