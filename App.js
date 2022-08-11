@@ -1,6 +1,7 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
 import LoginScreen from "./src/screens/loginScreen";
+import DetailScreen from "./src/screens/detailScreen";
 
 import {
   useFonts as useLato,
@@ -26,7 +27,8 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <LoginScreen />
+        {/* <LoginScreen /> */}
+        <DetailScreen />
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
