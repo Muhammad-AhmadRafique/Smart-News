@@ -1,8 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import { ActivityIndicator, Text, MD2Colors } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Text,
+  MD2Colors,
+  Subheading,
+} from "react-native-paper";
+import styled from "styled-components";
+import Search from "../components/search.component";
 import { Spacer } from "../components/spacer.component";
+import { SafeArea } from "../components/utility/safe.area.component";
 
+const TopContainer = styled(View)`
+  margin: 30px;
+  margin-top: 40px;
+`;
+const Heading = styled(Text)`
+  font-family: "Oswald_700Bold";
+  font-size: 50;
+`;
+const SubHeading = styled(Text)`
+  font-family: "Lato_700Bold";
+  font-size: 15;
+  color: ${(props) => props.theme.colors.text.disabled};
+`;
 function NewsFeedScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [newsList, setNewsList] = useState([]);
@@ -26,35 +47,40 @@ function NewsFeedScreen(props) {
       });
   };
 
-  useEffect(() => {
-    getHeadlines();
-  }, []);
+  // useEffect(() => {
+  //   getHeadlines();
+  // }, []);
 
   return (
-    <View style={styles.container}>
-      {isLoading ? (
+    /* {isLoading ? (
         <ActivityIndicator animating={true} color="#5282BD" />
-      ) : (
-        <FlatList
-          data={newsList}
-          renderItem={({ item }) => (
-            <Spacer>
-              <View>
-                <Text>{item.title}</Text>
-              </View>
-            </Spacer>
-          )}
-        />
-      )}
-    </View>
+      ) : ( */
+    <SafeArea>
+      <TopContainer>
+        <Heading>Discover</Heading>
+        <SubHeading>News from all over the world</SubHeading>
+      </TopContainer>
+      <Search />
+    </SafeArea>
   );
 }
+// <FlatList
+//     data={newsList}
+//     renderItem={({ item }) => (
+//       <Spacer>
+//         <View>
+//           <Text>{item.title}</Text>
+//         </View>
+//       </Spacer>
+//     )}
+//   />
 
 export default NewsFeedScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  topContainer: {
     flex: 1,
-    margin: 20,
+    margin: 30,
+    marginTop: 40,
   },
 });

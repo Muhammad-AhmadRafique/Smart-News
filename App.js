@@ -13,11 +13,12 @@ import { theme } from "./src/infrastructure/theme";
 import {
   useFonts as useOswald,
   Oswald_400Regular,
+  Oswald_700Bold,
 } from "@expo-google-fonts/oswald";
 import NewsFeedScreen from "./src/screens/newsFeedScreen";
 
 export default function App() {
-  const [oswaldLoaded] = useOswald({ Oswald_400Regular });
+  const [oswaldLoaded] = useOswald({ Oswald_400Regular, Oswald_700Bold });
   const [latoLoaded] = useLato({ Lato_400Regular, Lato_700Bold });
 
   if (!oswaldLoaded || !latoLoaded) {
