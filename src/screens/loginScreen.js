@@ -16,9 +16,6 @@ function LoginScreen(props) {
     return result;
   };
 
-  const toggleSwitch = () => {
-    setShowPassword(!showPassword);
-  };
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
@@ -101,7 +98,6 @@ const styles = StyleSheet.create({
     fontFamily: "Lato_700Bold",
     borderRadius: 4,
   },
-
   title: {
     color: "#333333",
     fontFamily: "Lato_700Bold",
