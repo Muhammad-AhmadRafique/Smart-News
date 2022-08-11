@@ -7,6 +7,7 @@ import {
   Subheading,
 } from "react-native-paper";
 import styled from "styled-components";
+import NewsFeedItem from "../components/news.feeds.component";
 import Search from "../components/search.component";
 import { Spacer } from "../components/spacer.component";
 import { SafeArea } from "../components/utility/safe.area.component";
@@ -26,7 +27,14 @@ const SubHeading = styled(Text)`
 `;
 function NewsFeedScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [newsList, setNewsList] = useState([]);
+  const [newsList, setNewsList] = useState([
+    { id: 1, name: "" },
+    { id: 2, name: "" },
+    { id: 3, name: "" },
+    { id: 4, name: "" },
+    { id: 5, name: "" },
+    { id: 6, name: "" },
+  ]);
 
   const apiKey = "60452f97691747c58b9d9153e47feae3";
   const getHeadlines = () => {
@@ -52,28 +60,24 @@ function NewsFeedScreen(props) {
   // }, []);
 
   return (
-    /* {isLoading ? (
-        <ActivityIndicator animating={true} color="#5282BD" />
-      ) : ( */
     <SafeArea>
       <TopContainer>
         <Heading>Discover</Heading>
         <SubHeading>News from all over the world</SubHeading>
       </TopContainer>
       <Search />
+      <Spacer position="bottom" size="large"></Spacer>
+      <FlatList
+        data={newsList}
+        renderItem={({ item }) => (
+          <Spacer position="bottom" size="large">
+            <NewsFeedItem />
+          </Spacer>
+        )}
+      />
     </SafeArea>
   );
 }
-// <FlatList
-//     data={newsList}
-//     renderItem={({ item }) => (
-//       <Spacer>
-//         <View>
-//           <Text>{item.title}</Text>
-//         </View>
-//       </Spacer>
-//     )}
-//   />
 
 export default NewsFeedScreen;
 

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const SearchContainer = styled(View)`
   padding: ${(props) => props.theme.space[3]};
-  padding-top: 4px;
+  padding-top: 0px;
 `;
 
 function Search(props) {
