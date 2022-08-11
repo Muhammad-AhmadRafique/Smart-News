@@ -15,6 +15,7 @@ import {
   useFonts as useOswald,
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
+import NewsFeedScreen from "./src/screens/newsFeedScreen";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({ Oswald_400Regular });
@@ -27,8 +28,7 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        {/* <LoginScreen /> */}
-        <DetailScreen />
+        <NewsFeedScreen />
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
