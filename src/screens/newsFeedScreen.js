@@ -34,18 +34,36 @@ const LoadingContainer = styled(View)`
 function NewsFeedScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [newsList, setNewsList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-  const url =
-    AppConstants.baseURL +
-    ApiUrls.topHeadlines +
-    "?country=us" +
-    "&apiKey=" +
-    AppConstants.apiKey;
+  const getUrl = () => {
+    if (searchKeyword === "") {
+      const url =
+        AppConstants.baseURL +
+        ApiUrls.topHeadlines +
+        "?country=us" +
+        "&apiKey=" +
+        AppConstants.apiKey;
+
+      return url;
+    } else {
+      const url =
+        AppConstants.baseURL +
+        ApiUrls.topHeadlines +
+        "?country=us" +
+        "&q=" +
+        searchKeyword +
+        "&apiKey=" +
+        AppConstants.apiKey;
+
+      return url;
+    }
+  };
 
   const getHeadlines = () => {
     setIsLoading(true);
 
-    return fetch(url)
+    return fetch(getUrl())
       .then((response) => response.json())
       .then((json) => {
         console.log(json.articles);
@@ -60,7 +78,11 @@ function NewsFeedScreen(props) {
 
   useEffect(() => {
     getHeadlines();
-  }, []);
+  }, [searchKeyword]);
+
+  const applySearch = (keyword) => {
+    setSearchKeyword(keyword);
+  };
 
   return (
     <SafeArea>
@@ -68,7 +90,7 @@ function NewsFeedScreen(props) {
         <Heading>Discover</Heading>
         <SubHeading>News from all over the world</SubHeading>
       </TopContainer>
-      <Search />
+      <Search applySearch={applySearch} />
       <Spacer position="bottom" size="large"></Spacer>
       {isLoading && (
         <LoadingContainer>

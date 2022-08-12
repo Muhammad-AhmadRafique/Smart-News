@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { Searchbar, Text } from "react-native-paper";
+import { View } from "react-native";
+import { Searchbar } from "react-native-paper";
 import styled from "styled-components";
 
 const SearchContainer = styled(View)`
@@ -8,7 +8,7 @@ const SearchContainer = styled(View)`
   padding-top: 0px;
 `;
 
-function Search(props) {
+function Search({ applySearch }) {
   const [keyword, setKeyword] = useState("");
 
   return (
@@ -16,9 +16,14 @@ function Search(props) {
       <Searchbar
         value={keyword}
         placeholder="Search Here..."
+        onSubmitEditing={() => {
+          applySearch(keyword);
+        }}
         onChangeText={(value) => {
-          console.log(value);
           setKeyword(value);
+          if (value === "") {
+            applySearch(value);
+          }
         }}
       />
     </SearchContainer>
