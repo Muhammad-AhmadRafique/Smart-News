@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
+import {
+  View,
+  FlatList,
+  Image,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import styled from "styled-components";
+import HeadlineFeedsComponent from "../components/headline.feeds.component";
 import NewsFeedItem from "../components/news.feeds.component";
 import Search from "../components/search.component";
 import { Spacer } from "../components/spacer.component";
 import { SafeArea } from "../components/utility/safe.area.component";
 import { ApiUrls, apiUrls, AppConstants } from "../constants/app.constants";
 import { colors } from "../infrastructure/theme/colors";
+import {
+  CellHeading,
+  CellSubHeading,
+  MediumHeading,
+} from "../infrastructure/theme/global.styles";
 
-const TopContainer = styled(View)`
-  margin: 30px;
-  margin-top: 40px;
-`;
-const Heading = styled(Text)`
-  font-family: ${(props) => props.theme.fonts.oswald_bold};
-  font-size: 50;
-`;
-const SubHeading = styled(Text)`
-  font-family: ${(props) => props.theme.fonts.lato_bold};
-  font-size: 15;
-  color: ${(props) => props.theme.colors.text.disabled};
+const ImageContainer = styled(View)`
+  height: 50%;
+  /* position: "absolute"; */
 `;
 const LoadingContainer = styled(View)`
   position: absolute;
@@ -32,114 +35,84 @@ const LoadingContainer = styled(View)`
 `;
 
 function NewsFeedScreen(props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [newsList, setNewsList] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [newsList, setNewsList] = useState([
+    { id: 1, name: "abc" },
+    { id: 2, name: "abcd" },
+    { id: 3, name: "abcde" },
+    { id: 4, name: "abcdef" },
+  ]);
   const [page, setPage] = useState(1);
-  const [isListEnd, setIsListEnd] = useState(false);
-
-  const getUrl = () => {
-    if (searchKeyword === "") {
-      const url =
-        AppConstants.baseURL +
-        ApiUrls.topHeadlines +
-        "?country=us" +
-        "&pageSize=100" +
-        "&page=" +
-        page +
-        "&apiKey=" +
-        AppConstants.apiKey;
-
-      return url;
-    } else {
-      const url =
-        AppConstants.baseURL +
-        ApiUrls.topHeadlines +
-        "?country=us" +
-        "&pageSize=100" +
-        "&page=" +
-        page +
-        "&q=" +
-        searchKeyword +
-        "&apiKey=" +
-        AppConstants.apiKey;
-
-      return url;
-    }
-  };
-
-  const getHeadlines = () => {
-    setIsLoading(true);
-    console.log(getUrl());
-    return fetch(getUrl())
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json.articles);
-        setIsLoading(false);
-
-        let list = json.articles;
-        let status = json["status"];
-
-        if (status === "ok") {
-          if (list === []) {
-            setIsListEnd(true);
-          } else {
-            setIsListEnd(false);
-            setNewsList([...newsList, ...list]);
-          }
-        } else {
-          setIsListEnd(true);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    if (isListEnd === false) {
-      getHeadlines();
-    }
-  }, [searchKeyword, page]);
-
-  const applySearch = (keyword) => {
-    reset();
-    setSearchKeyword(keyword);
-  };
-
-  const reset = () => {
-    setIsLoading(true);
-    setNewsList([]);
-    setPage(1);
-    setIsListEnd(false);
-  };
-
   return (
     <SafeArea>
-      <TopContainer>
-        <Heading>Discover</Heading>
-        <SubHeading>News from all over the world</SubHeading>
-      </TopContainer>
-      <Search applySearch={applySearch} />
-      <Spacer position="bottom" size="large"></Spacer>
-      {isLoading && (
-        <LoadingContainer>
-          <ActivityIndicator
-            animating={true}
-            size={50}
-            color={colors.brand.secondary}
-          />
-        </LoadingContainer>
-      )}
+      <ImageContainer>
+        <ImageBackground
+          source={{
+            uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
+          }}
+          style={{
+            height: "100%",
+            width: "100%",
+          }}
+          imageStyle={{
+            borderBottomLeftRadius: 40,
+            borderBottomRightRadius: 40,
+          }}
+        >
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                backgroundColor: "#FFFFFF",
+                alignItems: "center",
+                height: 40,
+                width: 150,
+                borderRadius: "20",
+                left: 30,
+              }}
+            >
+              <CellSubHeading
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Lato_700Bold",
+                  fontSize: 15,
+                }}
+              >
+                News of the day
+              </CellSubHeading>
+            </View>
+            <CellHeading
+              style={{
+                color: "white",
+                fontSize: 25,
+                fontFamily: "Lato_700Bold",
+                textAlign: "left",
+                margin: 30,
+                marginBottom: 50,
+              }}
+            >
+              `V.I.P Immunization for the Powerful and Their Cronies Rattles
+              South America`
+            </CellHeading>
+          </View>
+        </ImageBackground>
+      </ImageContainer>
+      <MediumHeading style={styles.headline}>Breaking News</MediumHeading>
       <FlatList
+        style={styles.listing}
+        horizontal
         data={newsList}
         renderItem={({ item }) => (
-          <Spacer position="bottom" size="veryLarge">
-            <NewsFeedItem item={item} />
+          <Spacer position="right" size="veryLarge">
+            <HeadlineFeedsComponent item={item} />
           </Spacer>
         )}
-        // keyExtractor={(item) => item.publishedAt}
         onEndReachedThreshold={0.2}
         onEndReached={() => {
           setPage(page + 1);
@@ -150,3 +123,12 @@ function NewsFeedScreen(props) {
 }
 
 export default NewsFeedScreen;
+
+const styles = StyleSheet.create({
+  headline: {
+    margin: 20,
+  },
+  listing: {
+    marginLeft: 20,
+  },
+});
