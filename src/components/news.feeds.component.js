@@ -22,7 +22,7 @@ function NewsFeedItem({ item }) {
       <Image
         source={{ uri: item.urlToImage }}
         style={styles.imageContainer}
-        defaultSource={require("../../assets/logo2.png")}
+        defaultSource={require("../../assets/news-placeholder.png")}
       ></Image>
       <View style={styles.labelContainer}>
         <CellHeading numberOfLines={3}>{item.title}</CellHeading>

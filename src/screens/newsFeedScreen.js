@@ -35,13 +35,84 @@ const LoadingContainer = styled(View)`
 `;
 
 function NewsFeedScreen(props) {
-  const [newsList, setNewsList] = useState([
-    { id: 1, name: "abc" },
-    { id: 2, name: "abcd" },
-    { id: 3, name: "abcde" },
-    { id: 4, name: "abcdef" },
-  ]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [newsList, setNewsList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
+  const [isListEnd, setIsListEnd] = useState(false);
+
+  const getUrl = () => {
+    if (searchKeyword === "") {
+      const url =
+        AppConstants.baseURL +
+        ApiUrls.topHeadlines +
+        "?country=us" +
+        "&pageSize=100" +
+        "&page=" +
+        page +
+        "&apiKey=" +
+        AppConstants.apiKey;
+
+      return url;
+    } else {
+      const url =
+        AppConstants.baseURL +
+        ApiUrls.topHeadlines +
+        "?country=us" +
+        "&pageSize=100" +
+        "&page=" +
+        page +
+        "&q=" +
+        searchKeyword +
+        "&apiKey=" +
+        AppConstants.apiKey;
+
+      return url;
+    }
+  };
+
+  const getHeadlines = () => {
+    setIsLoading(true);
+    console.log(getUrl());
+    return fetch(getUrl())
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json.articles);
+        setIsLoading(false);
+
+        let list = json.articles;
+        let status = json["status"];
+
+        if (status === "ok") {
+          if (list === []) {
+            setIsListEnd(true);
+          } else {
+            setIsListEnd(false);
+            setNewsList([...newsList, ...list]);
+          }
+        } else {
+          setIsListEnd(true);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (isListEnd === false) {
+      getHeadlines();
+    }
+  }, [searchKeyword, page]);
+
+  const reset = () => {
+    setIsLoading(true);
+    setNewsList([]);
+    setPage(1);
+    setIsListEnd(false);
+  };
+
   return (
     <SafeArea>
       <ImageContainer>
@@ -70,6 +141,7 @@ function NewsFeedScreen(props) {
               style={{
                 justifyContent: "center",
                 backgroundColor: "#FFFFFF",
+                opacity: 0.7,
                 alignItems: "center",
                 height: 40,
                 width: 150,
@@ -82,6 +154,7 @@ function NewsFeedScreen(props) {
                   textAlign: "center",
                   fontFamily: "Lato_700Bold",
                   fontSize: 15,
+                  color: "#333333",
                 }}
               >
                 News of the day
@@ -104,12 +177,21 @@ function NewsFeedScreen(props) {
         </ImageBackground>
       </ImageContainer>
       <MediumHeading style={styles.headline}>Breaking News</MediumHeading>
+      {isLoading && (
+        <LoadingContainer>
+          <ActivityIndicator
+            animating={true}
+            size={50}
+            color={colors.brand.secondary}
+          />
+        </LoadingContainer>
+      )}
       <FlatList
         style={styles.listing}
         horizontal
         data={newsList}
         renderItem={({ item }) => (
-          <Spacer position="right" size="veryLarge">
+          <Spacer position="right" size="large">
             <HeadlineFeedsComponent item={item} />
           </Spacer>
         )}

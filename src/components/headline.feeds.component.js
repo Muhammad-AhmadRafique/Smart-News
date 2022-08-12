@@ -18,24 +18,17 @@ function HeadlineFeedsComponent({ item }) {
   return (
     <View style={styles.container}>
       <Image
-        // source={{ uri: item.urlToImage }}
-        source={{
-          uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
-        }}
+        source={{ uri: item.urlToImage }}
         style={styles.imageContainer}
-        defaultSource={require("../../assets/logo2.png")}
+        defaultSource={require("../../assets/news-placeholder.png")}
       ></Image>
+      <Spacer position="bottom" size="large" />
       <View style={styles.labelContainer}>
-        {/* <CellHeading numberOfLines={3}>{item.title}</CellHeading>
+        <CellHeading numberOfLines={2}>{item.title}</CellHeading>
+        <Spacer position="bottom" size="medium" />
+        <CellSubHeading>{getDateStr(item.publishedAt)}</CellSubHeading>
         <Spacer position="bottom" size="small" />
-        <CellSubHeading>{getDateStr(item.publishedAt)}</CellSubHeading> */}
-        <Spacer position="bottom" size="large" />
-        <CellHeading numberOfLines={2}>
-          Candidate Biden Called Saudi Arabia a 'Pariah'
-        </CellHeading>
-        <Spacer position="bottom" size="small" />
-        <CellSubHeading>4 Hours ago</CellSubHeading>
-        <CellSubHeading>By David E.Sanger</CellSubHeading>
+        <CellSubHeading numberOfLines={2}>{item.author}</CellSubHeading>
       </View>
     </View>
   );
@@ -53,7 +46,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginLeft: 0,
     width: 250,
-    height: 140,
+    height: 120,
     maxWidth: 220,
     borderRadius: 16,
     resizeMode: "stretch",
@@ -61,7 +54,8 @@ const styles = StyleSheet.create({
   labelContainer: {
     flex: 1,
     flexDirection: "column",
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 0,
+    marginRight: 0,
+    justifyContent: "left",
   },
 });
