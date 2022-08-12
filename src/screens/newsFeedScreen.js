@@ -35,6 +35,8 @@ function NewsFeedScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [newsList, setNewsList] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [page, setPage] = useState(1);
+  const [isListEnd, setIsListEnd] = useState(false);
 
   const getUrl = () => {
     if (searchKeyword === "") {
@@ -42,6 +44,9 @@ function NewsFeedScreen(props) {
         AppConstants.baseURL +
         ApiUrls.topHeadlines +
         "?country=us" +
+        "&pageSize=100" +
+        "&page=" +
+        page +
         "&apiKey=" +
         AppConstants.apiKey;
 
@@ -51,6 +56,9 @@ function NewsFeedScreen(props) {
         AppConstants.baseURL +
         ApiUrls.topHeadlines +
         "?country=us" +
+        "&pageSize=100" +
+        "&page=" +
+        page +
         "&q=" +
         searchKeyword +
         "&apiKey=" +
@@ -62,13 +70,26 @@ function NewsFeedScreen(props) {
 
   const getHeadlines = () => {
     setIsLoading(true);
-
+    console.log(getUrl());
     return fetch(getUrl())
       .then((response) => response.json())
       .then((json) => {
         console.log(json.articles);
         setIsLoading(false);
-        setNewsList(json.articles);
+
+        let list = json.articles;
+        let status = json["status"];
+
+        if (status === "ok") {
+          if (list === []) {
+            setIsListEnd(true);
+          } else {
+            setIsListEnd(false);
+            setNewsList([...newsList, ...list]);
+          }
+        } else {
+          setIsListEnd(true);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -77,11 +98,21 @@ function NewsFeedScreen(props) {
   };
 
   useEffect(() => {
-    getHeadlines();
-  }, [searchKeyword]);
+    if (isListEnd === false) {
+      getHeadlines();
+    }
+  }, [searchKeyword, page]);
 
   const applySearch = (keyword) => {
+    reset();
     setSearchKeyword(keyword);
+  };
+
+  const reset = () => {
+    setIsLoading(true);
+    setNewsList([]);
+    setPage(1);
+    setIsListEnd(false);
   };
 
   return (
@@ -108,6 +139,11 @@ function NewsFeedScreen(props) {
             <NewsFeedItem item={item} />
           </Spacer>
         )}
+        // keyExtractor={(item) => item.publishedAt}
+        onEndReachedThreshold={0.2}
+        onEndReached={() => {
+          setPage(page + 1);
+        }}
       />
     </SafeArea>
   );
