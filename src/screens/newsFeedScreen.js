@@ -25,9 +25,9 @@ const SubHeading = styled(Text)`
 const LoadingContainer = styled(View)`
   position: absolute;
   top: 50%;
+  /* bottom: 50px; */
   left: 50%;
   margin-left: -25px;
-  margin-top: -25px;
   margin-top: 50px;
 `;
 
