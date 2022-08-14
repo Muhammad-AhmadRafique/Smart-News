@@ -46,7 +46,8 @@ function NewsFeedScreen(props) {
       const url =
         AppConstants.baseURL +
         ApiUrls.topHeadlines +
-        "?country=us" +
+        "?category=business" +
+        "&country=us" +
         "&pageSize=100" +
         "&page=" +
         page +
@@ -58,7 +59,8 @@ function NewsFeedScreen(props) {
       const url =
         AppConstants.baseURL +
         ApiUrls.topHeadlines +
-        "?country=us" +
+        "?category=business" +
+        "&country=us" +
         "&pageSize=100" +
         "&page=" +
         page +

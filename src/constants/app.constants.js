@@ -7,4 +7,5 @@ export const AppConstants = {
 
 export const ApiUrls = {
   topHeadlines: "/top-headlines",
+  everything: "/everything",
 };

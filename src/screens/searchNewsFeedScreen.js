@@ -39,8 +39,8 @@ function SearchNewsFeedScreen(props) {
     if (searchKeyword === "") {
       const url =
         AppConstants.baseURL +
-        ApiUrls.topHeadlines +
-        "?country=us" +
+        ApiUrls.everything +
+        "?sources=politico" +
         "&pageSize=100" +
         "&page=" +
         page +
@@ -51,8 +51,8 @@ function SearchNewsFeedScreen(props) {
     } else {
       const url =
         AppConstants.baseURL +
-        ApiUrls.topHeadlines +
-        "?country=us" +
+        ApiUrls.everything +
+        "?sources=politico" +
         "&pageSize=100" +
         "&page=" +
         page +
