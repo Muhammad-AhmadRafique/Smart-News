@@ -120,7 +120,8 @@ function NewsFeedScreen(props) {
       <ImageContainer>
         <ImageBackground
           source={{
-            uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
+            // uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
+            uri: newsList[0].urlToImage,
           }}
           style={{
             height: "100%",
@@ -172,8 +173,7 @@ function NewsFeedScreen(props) {
                 marginBottom: 50,
               }}
             >
-              `V.I.P Immunization for the Powerful and Their Cronies Rattles
-              South America`
+              `${newsList[0].title}`
             </CellHeading>
           </View>
         </ImageBackground>
