@@ -120,8 +120,8 @@ function NewsFeedScreen(props) {
       <ImageContainer>
         <ImageBackground
           source={{
-            // uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
-            uri: newsList[0].urlToImage,
+            uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
+            // uri: newsList[0].urlToImage,
           }}
           style={{
             height: "100%",
@@ -173,7 +173,8 @@ function NewsFeedScreen(props) {
                 marginBottom: 50,
               }}
             >
-              `${newsList[0].title}`
+              {/* `${newsList[0].title}` */}
+              This is testing news...
             </CellHeading>
           </View>
         </ImageBackground>
