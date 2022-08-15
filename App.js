@@ -59,12 +59,17 @@ export default function App() {
             <Tab.Screen
               name="HeadLines"
               component={NewsFeedScreen}
-              tabBarIcon
               options={{
                 style: { justifyContent: "center", alignItems: "Center" },
+                headerShown: false,
               }}
             />
-            <Tab.Screen name="Feeds" component={SearchNewsFeedScreen} />
+            <Tab.Screen name="Feeds" 
+            component={SearchNewsFeedScreen}
+            options={{
+              headerShown: false,
+            }
+            } />
           </Tab.Navigator>
         </NavigationContainer>
       </ThemeProvider>

@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   ImageBackground,
+  Platform,
 } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import styled from "styled-components";
@@ -124,7 +125,7 @@ function NewsFeedScreen(props) {
             // uri: newsList[0].urlToImage,
           }}
           style={{
-            height: "100%",
+            height: Platform.OS == 'android' ? '92%' : "100%",
             width: "100%",
           }}
           imageStyle={{
@@ -148,7 +149,7 @@ function NewsFeedScreen(props) {
                 alignItems: "center",
                 height: 40,
                 width: 150,
-                borderRadius: "20",
+                borderRadius: 20,
                 left: 30,
               }}
             >
@@ -212,6 +213,7 @@ export default NewsFeedScreen;
 const styles = StyleSheet.create({
   headline: {
     margin: 20,
+    marginTop: 0,
   },
   listing: {
     marginLeft: 20,

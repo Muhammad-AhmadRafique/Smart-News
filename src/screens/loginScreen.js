@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     marginTop: 100,
     margin: 20,
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: "white",
     fontFamily: "Lato_700Bold",
-    borderRadius: 4,
+    borderRadius:4,
   },
   title: {
     color: "#333333",

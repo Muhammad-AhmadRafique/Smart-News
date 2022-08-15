@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Platform } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import styled from "styled-components";
 import NewsFeedItem from "../components/news.feeds.component";
@@ -10,9 +10,12 @@ import { ApiUrls, apiUrls, AppConstants } from "../constants/app.constants";
 import { colors } from "../infrastructure/theme/colors";
 import { MainHeading } from "../infrastructure/theme/global.styles";
 
-const TopContainer = styled(View)`
+const TopContainer = Platform.OS == 'ios' ? styled(View)`
   margin: 30px;
   margin-top: 40px;
+` : styled(View)`
+margin: 20px;
+margin-top: 5px;
 `;
 const SubHeading = styled(Text)`
   font-family: ${(props) => props.theme.fonts.lato_bold};
