@@ -26,7 +26,6 @@ function Search({ applySearch }) {
         inputStyle={{ marginLeft: -10 }}
         value={keyword}
         placeholder="Search"
-        elevation="0"
         onSubmitEditing={() => {
           applySearch(keyword);
         }}

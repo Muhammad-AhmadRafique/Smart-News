@@ -39,8 +39,8 @@ export default HeadlineFeedsComponent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "left",
-    alignItems: "left",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     maxWidth: 220,
   },
   imageContainer: {
@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: 0,
     marginRight: 0,
-    justifyContent: "left",
+    justifyContent: "flex-start",
   },
 });
