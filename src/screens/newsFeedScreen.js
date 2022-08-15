@@ -37,6 +37,7 @@ const LoadingContainer = styled(View)`
 function NewsFeedScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [newsList, setNewsList] = useState([]);
+  const [isNewsFetched, setIsNewsFetched] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [isListEnd, setIsListEnd] = useState(false);
@@ -95,6 +96,7 @@ function NewsFeedScreen(props) {
         } else {
           setIsListEnd(true);
         }
+        setIsNewsFetched(true);
       })
       .catch((error) => {
         console.error(error);
@@ -107,6 +109,12 @@ function NewsFeedScreen(props) {
       getHeadlines();
     }
   }, [searchKeyword, page]);
+
+  useEffect(() => {
+    if (isNewsFetched === false) {
+      setIsNewsFetched(true);
+    }
+  }, [isNewsFetched]);
 
   const reset = () => {
     setIsLoading(true);
