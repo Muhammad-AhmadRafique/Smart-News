@@ -54,11 +54,13 @@ function LoginScreen(props) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
+          const { navigation } = props
           const result = validate(email);
           if (result === false) {
             Alert.alert("Error", "Please enter valid email");
           } else {
             console.log("validsssss screens");
+            navigation.replace("NewsFeedtabs")
           }
         }}
       >

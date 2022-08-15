@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ImageBackground,
   Platform,
+  TouchableOpacity
 } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import styled from "styled-components";
@@ -21,6 +22,9 @@ import {
   CellSubHeading,
   MediumHeading,
 } from "../infrastructure/theme/global.styles";
+
+import DetailScreen from "./detailScreen";
+const imagePlaceholder = require("../../assets/news-placeholder.png")
 
 const ImageContainer = styled(View)`
   height: 50%;
@@ -41,6 +45,8 @@ function NewsFeedScreen(props) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [isListEnd, setIsListEnd] = useState(false);
+  const [headlineData, setHeadlineData] = useState({ urlToImage: require("../../assets/news-placeholder.png"), title: "" })
+  const [headline, setHeadline] = useState(false)
 
   const getUrl = () => {
     if (searchKeyword === "") {
@@ -74,13 +80,19 @@ function NewsFeedScreen(props) {
     }
   };
 
+  useEffect(() => {
+    if (headline) {
+      setHeadline(false)
+    }
+  }, [headline])
+
   const getHeadlines = () => {
     setIsLoading(true);
     console.log(getUrl());
     return fetch(getUrl())
       .then((response) => response.json())
       .then((json) => {
-        console.log(json.articles);
+        // console.log(json.articles);
         setIsLoading(false);
 
         let list = json.articles;
@@ -92,6 +104,11 @@ function NewsFeedScreen(props) {
           } else {
             setIsListEnd(false);
             setNewsList([...newsList, ...list]);
+            setHeadlineData({
+              urlToImage: list[0].urlToImage,
+              title: list[0].title
+            })
+            setHeadline(true)
           }
         } else {
           setIsListEnd(true);
@@ -116,13 +133,19 @@ function NewsFeedScreen(props) {
     setIsListEnd(false);
   };
 
+  const navigateToDetailScreen = (item) => {
+    const { navigation } = props
+    navigation.push('Details', { item })
+  }
+
   return (
     <SafeArea>
       <ImageContainer>
         <ImageBackground
           source={{
-            uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
+            // uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
             // uri: newsList[0].urlToImage,
+            uri: headlineData.urlToImage == null ? require("../../assets/news-placeholder.png") : headlineData.urlToImage
           }}
           style={{
             height: Platform.OS == 'android' ? '92%' : "100%",
@@ -175,7 +198,7 @@ function NewsFeedScreen(props) {
               }}
             >
               {/* `${newsList[0].title}` */}
-              This is testing news...
+              {headlineData.title}
             </CellHeading>
           </View>
         </ImageBackground>
@@ -196,7 +219,16 @@ function NewsFeedScreen(props) {
         data={newsList}
         renderItem={({ item }) => (
           <Spacer position="right" size="large">
-            <HeadlineFeedsComponent item={item} />
+            <TouchableOpacity
+              style={{
+                height: "100%"
+              }}
+              onPress={() => {
+                navigateToDetailScreen(item);
+              }}
+            >
+              <HeadlineFeedsComponent item={item} />
+            </TouchableOpacity>
           </Spacer>
         )}
         onEndReachedThreshold={0.2}
