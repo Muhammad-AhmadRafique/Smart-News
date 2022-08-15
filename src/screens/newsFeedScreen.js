@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   ImageBackground,
+  TouchableOpacity
 } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import styled from "styled-components";
@@ -20,6 +21,8 @@ import {
   CellSubHeading,
   MediumHeading,
 } from "../infrastructure/theme/global.styles";
+
+import DetailScreen from "./detailScreen";
 
 const ImageContainer = styled(View)`
   height: 50%;
@@ -79,7 +82,7 @@ function NewsFeedScreen(props) {
     return fetch(getUrl())
       .then((response) => response.json())
       .then((json) => {
-        console.log(json.articles);
+        // console.log(json.articles);
         setIsLoading(false);
 
         let list = json.articles;
@@ -114,6 +117,11 @@ function NewsFeedScreen(props) {
     setPage(1);
     setIsListEnd(false);
   };
+
+  const navigateToDetailScreen = (item) => {
+    const { navigation } = props
+    navigation.push('Details',{item})
+  }
 
   return (
     <SafeArea>
@@ -195,7 +203,16 @@ function NewsFeedScreen(props) {
         data={newsList}
         renderItem={({ item }) => (
           <Spacer position="right" size="large">
-            <HeadlineFeedsComponent item={item} />
+            <TouchableOpacity
+              style={{
+                height: "100%"
+              }}
+              onPress={() => {
+                navigateToDetailScreen(item);
+              }}
+            >
+              <HeadlineFeedsComponent item={item} />
+            </TouchableOpacity>
           </Spacer>
         )}
         onEndReachedThreshold={0.2}

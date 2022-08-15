@@ -23,6 +23,7 @@ import {
 
 import NewsFeedScreen from "./src/screens/newsFeedScreen";
 import SearchNewsFeedScreen from "./src/screens/searchNewsFeedScreen";
+import NewsNavStack from "./src/navigators/index"
 
 const Tab = createBottomTabNavigator();
 
@@ -60,7 +61,7 @@ export default function App() {
           >
             <Tab.Screen
               name="HeadLines"
-              component={NewsFeedScreen}
+              component={NewsNavStack}
               tabBarIcon
               options={{
                 style: { justifyContent: "center", alignItems: "Center" },

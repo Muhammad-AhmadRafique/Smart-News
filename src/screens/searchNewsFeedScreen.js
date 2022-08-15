@@ -71,7 +71,7 @@ function SearchNewsFeedScreen(props) {
     return fetch(getUrl())
       .then((response) => response.json())
       .then((json) => {
-        console.log(json.articles);
+        // console.log(json.articles);
         setIsLoading(false);
 
         let list = json.articles;

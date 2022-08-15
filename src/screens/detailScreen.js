@@ -6,27 +6,43 @@ import {
     TouchableOpacity,
     SectionList,
     Image,
-    Alert,
-    RefreshControl,
-    Modal,
-    Pressable,
-    ScrollView,
-    Platform,
-    Dimensions,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome'
+const placeholder = require('../../assets/news-placeholder.png')
 
-const DetailScreen = () => {
+const DetailScreen = ({ route, navigation }) => {
+    const { item } = route.params
+    console.log(item)
     return (
         <View>
-            <View style={styles.container}>
+            <View>
                 <Image
-                    style={{ width: '100%', height: 300, borderRadius: 35 }}
+                    style={{ width: '100%', height: 300, borderBottomRightRadius: 35, borderBottomLeftRadius: 35 }}
                     resizeMode={'cover'}
+                    defaultSource={require("../../assets/news-placeholder.png")}
                     source={{
-                        uri: 'https://i.wfcdn.de/teaser/1920/38553.jpg',
+                        uri: item.urlToImage,
                     }} />
+                <View style={{
+                    width: '95%',
+                    paddingVertical: 10,
+                    alignSelf: 'center',
+                    position: 'absolute',
+                    top: 0,
+                }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.goBack(null)
+                        }}
+                    >
+                        <Icon
+                            name='arrow-left'
+                            size={30}
+                            style={{ color: 'white', }} />
+                    </TouchableOpacity>
+
+                </View>
                 <View
                     style={{
                         width: '90%',
@@ -34,14 +50,13 @@ const DetailScreen = () => {
                         padding: 10,
                         alignSelf: 'center',
                         position: 'absolute',
-                        bottom: 0,
-                        // backgroundColor: 'white',
-                        // borderWidth: 1,
-                        borderRadius: 0,
+                        bottom: 10,
+                        borderRadius: 35,
+                        backgroundColor:"rgba(173, 172, 172, 0.7)"
                     }}
                 >
-                    <Text style={styles.title}>
-                        Tesla Supercharger und andere sind in Deutschland eigentlich illegal
+                    <Text style={styles.title} numberOfLines={3}>
+                        {item.title}
                     </Text>
                 </View>
             </View>
@@ -60,8 +75,10 @@ const DetailScreen = () => {
                         // alignSelf: 'flex-end',
                         width: '95%',
                         textAlign: 'center'
-                    }}>
-                        Witold Pryjda
+                    }}
+                        numberOfLines={1}
+                    >
+                        {item.author == null ? "-" : item.author}
                     </Text>
                 </View>
                 <View style={{
@@ -74,7 +91,7 @@ const DetailScreen = () => {
                     <Icon
                         name='clock-o'
                         size={16}
-                        style={{ color: 'grey',paddingLeft:10 }} />
+                        style={{ color: 'grey', paddingLeft: 10 }} />
                     <Text style={{
                         color: 'black',
                         fontSize: 15,
@@ -84,7 +101,7 @@ const DetailScreen = () => {
                         paddingLeft: 5
                         // textAlign: 'center'
                     }}>
-                        {moment(new Date('2022-08-12T07:15:00Z')).format('YYYY-MM-DD')}
+                        {item.publishedAt == null ? "-" : moment(new Date(item.publishedAt)).format('YYYY-MM-DD')}
                     </Text>
                 </View>
             </View>
@@ -92,25 +109,22 @@ const DetailScreen = () => {
                 <Text
                     style={{ padding: 10, fontSize: 16, color: 'grey' }}
                 >
-                    Die Fahrzeuge von Tesla werden auch in Deutschland immer populärer,
-                    ein Grund dafür ist das Netzwerk an Tesla-eigenen Ladesäulen, also den sogenannten Superchargern.
-                    Doch laut deutschem Recht sind diese eigentlich illegal, da sie gegen Eichrecht verstoßen.(We…
+                    {item.description}
                 </Text>
             </View>
 
-            {/* <Text style={styles.title}>Hello</Text> */}
         </View>
     );
 };
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        paddingTop: 100,
+        // padding: 10,
+        // paddingTop: 100,
     },
     title: {
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
     },
 
 });
