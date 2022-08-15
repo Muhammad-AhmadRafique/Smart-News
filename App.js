@@ -29,6 +29,7 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <NewsFeedScreen />
+        {/* <DetailScreen/> */}
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
