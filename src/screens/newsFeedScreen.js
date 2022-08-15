@@ -148,7 +148,7 @@ function NewsFeedScreen(props) {
                 alignItems: "center",
                 height: 40,
                 width: 150,
-                borderRadius: "20",
+                borderRadius: 20,
                 left: 30,
               }}
             >
