@@ -23,6 +23,7 @@ import {
 } from "../infrastructure/theme/global.styles";
 
 import DetailScreen from "./detailScreen";
+const imagePlaceholder = require("../../assets/news-placeholder.png")
 
 const ImageContainer = styled(View)`
   height: 50%;
@@ -43,6 +44,8 @@ function NewsFeedScreen(props) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [isListEnd, setIsListEnd] = useState(false);
+  const [headlineData, setHeadlineData] = useState({ urlToImage: require("../../assets/news-placeholder.png"), title: "" })
+  const [headline, setHeadline] = useState(false)
 
   const getUrl = () => {
     if (searchKeyword === "") {
@@ -76,6 +79,12 @@ function NewsFeedScreen(props) {
     }
   };
 
+  useEffect(() => {
+    if (headline) {
+      setHeadline(false)
+    }
+  }, [headline])
+
   const getHeadlines = () => {
     setIsLoading(true);
     console.log(getUrl());
@@ -94,6 +103,11 @@ function NewsFeedScreen(props) {
           } else {
             setIsListEnd(false);
             setNewsList([...newsList, ...list]);
+            setHeadlineData({
+              urlToImage: list[0].urlToImage,
+              title: list[0].title
+            })
+            setHeadline(true)
           }
         } else {
           setIsListEnd(true);
@@ -120,7 +134,7 @@ function NewsFeedScreen(props) {
 
   const navigateToDetailScreen = (item) => {
     const { navigation } = props
-    navigation.push('Details',{item})
+    navigation.push('Details', { item })
   }
 
   return (
@@ -128,8 +142,9 @@ function NewsFeedScreen(props) {
       <ImageContainer>
         <ImageBackground
           source={{
-            uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
+            // uri: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2022%2F0812%2Fr1047370_1296x729_16%2D9.jpg",
             // uri: newsList[0].urlToImage,
+            uri: headlineData.urlToImage == null ? require("../../assets/news-placeholder.png") : headlineData.urlToImage
           }}
           style={{
             height: "100%",
@@ -182,7 +197,7 @@ function NewsFeedScreen(props) {
               }}
             >
               {/* `${newsList[0].title}` */}
-              This is testing news...
+              {headlineData.title}
             </CellHeading>
           </View>
         </ImageBackground>

@@ -24,8 +24,10 @@ import {
 import NewsFeedScreen from "./src/screens/newsFeedScreen";
 import SearchNewsFeedScreen from "./src/screens/searchNewsFeedScreen";
 import NewsNavStack from "./src/navigators/index"
+import { createStackNavigator } from "@react-navigation/stack";
 
-const Tab = createBottomTabNavigator();
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const [oswaldLoaded] = useOswald({ Oswald_400Regular, Oswald_700Bold });
@@ -40,35 +42,15 @@ export default function App() {
       <ThemeProvider theme={theme}>
 
         <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-
-                if (route.name === "HeadLines") {
-                  iconName = focused ? "ios-home-sharp" : "ios-home-outline";
-                } else if (route.name === "Feeds") {
-                  iconName = focused ? "ios-search" : "search-outline";
-                }
-
-                return <Ionicons name={iconName} size={30} color={color} />;
-              },
-              tabBarShowLabel: false,
-              tabBarLabelStyle: "30px",
-              tabBarActiveTintColor: "black",
-              tabBarInactiveTintColor: "gray",
-            })}
-          >
-            <Tab.Screen
-              name="HeadLines"
-              component={NewsNavStack}
-              tabBarIcon
-              options={{
-                style: { justifyContent: "center", alignItems: "Center" },
-              }}
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }} >
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="NewsFeedtabs" component={NewsNavStack} />
+            <Stack.Screen name="Details" component={DetailScreen}
             />
-            <Tab.Screen name="Feeds" component={SearchNewsFeedScreen} />
-          </Tab.Navigator>
+          </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
