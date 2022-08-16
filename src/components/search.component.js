@@ -22,7 +22,7 @@ function Search({ applySearch }) {
   return (
     <SearchContainer>
       <CustomSearchBar
-        icon={() => <Ionicons name="search-outline" size={20} color="F1F1F1" />}
+        icon={() => <Ionicons name="search-outline" size={20} color="#F1F1F1" />}
         inputStyle={{ marginLeft: -10 }}
         value={keyword}
         placeholder="Search"
