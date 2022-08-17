@@ -11,9 +11,9 @@ const SearchContainer = styled(View)`
 
 const CustomSearchBar = styled(Searchbar)`
   font-family: ${(props) => props.theme.fonts.oswald};
-  font-size: 20;
+  font-size: 20px;
   background-color: ${(props) => props.theme.colors.ui.tertiary};
-  border-radius: 16;
+  border-radius: 16px;
 `;
 
 function Search({ applySearch }) {
@@ -22,7 +22,9 @@ function Search({ applySearch }) {
   return (
     <SearchContainer>
       <CustomSearchBar
-        icon={() => <Ionicons name="search-outline" size={20} color="#F1F1F1" />}
+        icon={() => (
+          <Ionicons name="search-outline" size={20} color="#F1F1F1" />
+        )}
         inputStyle={{ marginLeft: -10 }}
         value={keyword}
         placeholder="Search"

@@ -10,16 +10,19 @@ import { ApiUrls, apiUrls, AppConstants } from "../constants/app.constants";
 import { colors } from "../infrastructure/theme/colors";
 import { MainHeading } from "../infrastructure/theme/global.styles";
 
-const TopContainer = Platform.OS == 'ios' ? styled(View)`
-  margin: 30px;
-  margin-top: 40px;
-` : styled(View)`
-margin: 20px;
-margin-top: 5px;
-`;
+const TopContainer =
+  Platform.OS == "ios"
+    ? styled(View)`
+        margin: 30px;
+        margin-top: 40px;
+      `
+    : styled(View)`
+        margin: 20px;
+        margin-top: 5px;
+      `;
 const SubHeading = styled(Text)`
   font-family: ${(props) => props.theme.fonts.lato_bold};
-  font-size: 15;
+  font-size: 15px;
   color: ${(props) => props.theme.colors.text.disabled};
 `;
 const LoadingContainer = styled(View)`
